@@ -1,15 +1,22 @@
 import React from "react";
 import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import httpService from "../services/httpService";
 
 function SignUp() {
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
+      firstName: "",
+      lastName: "",
       email: "",
       password: "",
       confirmPassword: "",
     },
     validationSchema: Yup.object({
+      firstName: Yup.string().required("Required"),
+      lastName: Yup.string().required("Required"),
       email: Yup.string().email("Invalid email address").required("Required"),
       password: Yup.string()
         .max(10, "Must be 10 characters or less")
@@ -19,7 +26,20 @@ function SignUp() {
         .oneOf([Yup.ref("password"), null], "Passwords must match"),
     }),
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      const data = {
+        firstname: values.firstName,
+        lastname: values.lastName,
+        email: values.email,
+        password: values.password,
+      };
+
+      httpService
+        .post("/auth/register", data)
+        .then((response) => {
+          navigate("/");
+          console.log("response: ", response.data);
+        })
+        .catch((err) => console.log("error", err.response.data));
     },
   });
 
@@ -28,6 +48,32 @@ function SignUp() {
       <h1>Welcome to our CV APP!</h1>
       <h2>Enter your details to create your account</h2>
       <form onSubmit={formik.handleSubmit}>
+        <div>
+          <label htmlFor="firstName">FirstName</label>
+          <input
+            type="firstName"
+            id="firstName"
+            name="firstName"
+            onChange={formik.handleChange}
+            value={formik.values.firstName}
+          />
+          {formik.touched.firstName && formik.errors.firstName ? (
+            <div className="error-message">{formik.errors.firstName}</div>
+          ) : null}
+        </div>
+        <div>
+          <label htmlFor="lastName">LastName</label>
+          <input
+            type="lastName"
+            id="lastName"
+            name="lastName"
+            onChange={formik.handleChange}
+            value={formik.values.lastName}
+          />
+          {formik.touched.lastName && formik.errors.lastName ? (
+            <div className="error-message">{formik.errors.lastName}</div>
+          ) : null}
+        </div>
         <div>
           <label htmlFor="email">Email</label>
           <input

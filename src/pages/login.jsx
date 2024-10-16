@@ -1,8 +1,11 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import httpService from "../services/httpService";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -10,12 +13,22 @@ function Login() {
     },
     validationSchema: Yup.object({
       email: Yup.string().email("Invalid email address").required("Required"),
-      password: Yup.string()
-        .max(10, "Must be 10 characters or less")
-        .required("Required"),
+      password: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      const data = {
+        email: values.email,
+        password: values.password,
+      };
+      httpService
+        .post("/auth/login", data)
+        .then((response) => {
+          const { token } = response.data;
+
+          localStorage.setItem("token", token);
+          navigate("/timeline");
+        })
+        .catch((err) => console.log("error", err.response.data));
     },
   });
 
