@@ -45,6 +45,10 @@ label {
   font-weight: bold;
 }
 
+.search {
+  width: 50%;
+}
+
 input,
 textarea {
   padding: 0.5rem;
