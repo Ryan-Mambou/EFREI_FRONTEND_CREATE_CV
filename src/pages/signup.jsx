@@ -1,4 +1,3 @@
-import React from "react";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
@@ -36,7 +35,7 @@ function SignUp() {
       httpService
         .post("/auth/register", data)
         .then((response) => {
-          navigate("/");
+          navigate("/timeline");
           console.log("response: ", response.data);
         })
         .catch((err) => console.log("error", err.response.data));
@@ -49,9 +48,9 @@ function SignUp() {
       <h2>Enter your details to create your account</h2>
       <form onSubmit={formik.handleSubmit}>
         <div>
-          <label htmlFor="firstName">FirstName</label>
+          <label htmlFor="firstName">First Name</label>
           <input
-            type="firstName"
+            type="text"
             id="firstName"
             name="firstName"
             onChange={formik.handleChange}
@@ -62,9 +61,9 @@ function SignUp() {
           ) : null}
         </div>
         <div>
-          <label htmlFor="lastName">LastName</label>
+          <label htmlFor="lastName">Last Name</label>
           <input
-            type="lastName"
+            type="text"
             id="lastName"
             name="lastName"
             onChange={formik.handleChange}
@@ -115,6 +114,14 @@ function SignUp() {
         </div>
         <button type="submit">Sign up</button>
       </form>
+
+      {/* Bouton pour aller à la page de connexion */}
+      <div style={{ marginTop: "1rem" }}>
+        <p>Already have an account?</p>
+        <button type="button" onClick={() => navigate("/")}>
+          Login
+        </button>
+      </div>
     </div>
   );
 }
