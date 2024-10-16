@@ -6,7 +6,7 @@ function CVComponent({ firstname, lastname, description, id }) {
       <h2>{`${firstname} ${lastname}`}</h2>
       <p>{description}</p>
       <a href={`/resume/${id}`} target="_blank" rel="noopener noreferrer">
-        Download PDF
+        View details in PDF
       </a>
     </div>
   );
