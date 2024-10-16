@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Recommendation from "./recommendation";
+import httpService from "../services/httpService";
 
 function CVComponent({
   firstname,
@@ -14,12 +15,17 @@ function CVComponent({
     setRecommendation(event.target.value);
   };
 
-  const inputStyle = {
-    width: "100%",
-    padding: "0.5rem",
-    borderRadius: "0.5rem",
-    outline: "none",
-    marginTop: "1rem",
+  const addRecommendation = async () => {
+    const data = {
+      cvId: id,
+      text: recommendation,
+    };
+    try {
+      await httpService.post(`/recommendation`, data);
+      setRecommendation("");
+    } catch (error) {
+      console.error("Error adding recommendation", error.response.data);
+    }
   };
 
   return (
@@ -45,7 +51,7 @@ function CVComponent({
             value={recommendation}
             onChange={handleChange}
           />
-          <button>Submit</button>
+          <button onClick={addRecommendation}>Submit</button>
         </div>
       </div>
       {/* {recommendations.length > 0 ? (
