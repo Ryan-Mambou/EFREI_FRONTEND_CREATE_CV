@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Recommendation from "./recommendation";
 import httpService from "../services/httpService";
+import { toast } from "react-toastify";
 
 function CVComponent({
   firstname,
@@ -23,6 +24,7 @@ function CVComponent({
     try {
       await httpService.post(`/recommendation`, data);
       setRecommendation("");
+      toast.success("Recommendation added successfully!");
     } catch (error) {
       console.error("Error adding recommendation", error.response.data);
     }

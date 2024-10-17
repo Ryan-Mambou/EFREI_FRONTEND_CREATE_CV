@@ -6,6 +6,8 @@ import Error from "./pages/Error";
 import BuildResume from "./pages/buildResume";
 import CVPdf from "./pages/cvPDF";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
 function App() {
@@ -35,6 +37,7 @@ function App() {
         ></Route>
         <Route path="*" element={<Error />}></Route>
       </Routes>
+      <ToastContainer />
     </Router>
   );
 }
