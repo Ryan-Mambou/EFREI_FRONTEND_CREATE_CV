@@ -6,6 +6,21 @@ import Nav from "../components/nav";
 import { toast } from "react-toastify";
 
 function BuildResume() {
+  const radioStyle = {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: "0.5rem",
+  };
+
+  const paragraphStyle = {
+    margin: "0 0 0.5rem 0",
+    fontWeight: "600",
+    fontSize: "1.2rem",
+    border: "1px solid #ccc",
+    padding: "0.5rem",
+  };
+
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -72,7 +87,7 @@ function BuildResume() {
       <Nav />
       <h2>Enter your information</h2>
       <form onSubmit={formik.handleSubmit}>
-        <p>Personal Information</p>
+        <p style={paragraphStyle}>Personal Information</p>
         <div>
           <label htmlFor="firstName">First Name</label>
           <input
@@ -114,30 +129,34 @@ function BuildResume() {
 
         <div>
           <p>Do you want your CV to be visible?</p>
-          <input
-            type="radio"
-            name="visible"
-            id="visibleYes"
-            value="true"
-            checked={formik.values.visible === true}
-            onChange={() => formik.setFieldValue("visible", true)}
-          />
-          <label htmlFor="visibleYes">Visible</label>
-          <input
-            type="radio"
-            name="visible"
-            id="visibleNo"
-            value="false"
-            checked={formik.values.visible === false}
-            onChange={() => formik.setFieldValue("visible", false)}
-          />
-          <label htmlFor="visibleNo">Invisible</label>
+          <div style={radioStyle}>
+            <input
+              type="radio"
+              name="visible"
+              id="visibleYes"
+              value="true"
+              checked={formik.values.visible === true}
+              onChange={() => formik.setFieldValue("visible", true)}
+            />
+            <label htmlFor="visibleYes">Visible</label>
+          </div>
+          <div style={radioStyle}>
+            <input
+              type="radio"
+              name="visible"
+              id="visibleNo"
+              value="false"
+              checked={formik.values.visible === false}
+              onChange={() => formik.setFieldValue("visible", false)}
+            />
+            <label htmlFor="visibleNo">Invisible</label>
+          </div>
           {formik.touched.visible && formik.errors.visible ? (
             <div className="error-message">{formik.errors.visible}</div>
           ) : null}
         </div>
 
-        <p>Professional Experience</p>
+        <p style={paragraphStyle}>Professional Experience</p>
         <div>
           <label htmlFor="company">Company</label>
           <input
@@ -182,7 +201,7 @@ function BuildResume() {
           />
         </div>
 
-        <p>Educational Background</p>
+        <p style={paragraphStyle}>Educational Background</p>
         <div>
           <label htmlFor="degree">Degree</label>
           <input

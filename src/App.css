@@ -57,7 +57,10 @@ label {
   width: 50%;
 }
 
-input,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
 textarea {
   padding: 0.5rem;
   border-radius: 0.5rem;
