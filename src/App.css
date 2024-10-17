@@ -106,4 +106,6 @@ button:hover {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
 }

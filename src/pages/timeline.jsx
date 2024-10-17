@@ -80,7 +80,6 @@ function Timeline() {
               lastname={cv.lastname}
               firstname={cv.firstname}
               description={cv.description}
-              recommendations={cv?.recommendations}
               id={cv._id}
               key={cv._id}
             />
