@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import httpService from "../services/httpService";
 import { useParams } from "react-router-dom";
 

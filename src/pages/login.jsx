@@ -1,4 +1,3 @@
-import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import httpService from "../services/httpService";
@@ -6,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -34,7 +34,7 @@ function Login() {
 
   return (
     <div>
-      <h2>Enter your details to create your account</h2>
+      <h2>Enter your details to log in</h2>
       <form onSubmit={formik.handleSubmit}>
         <div>
           <label htmlFor="email">Email</label>
@@ -64,6 +64,14 @@ function Login() {
         </div>
         <button type="submit">Login</button>
       </form>
+
+      {/* Bouton pour aller à la page d'inscription */}
+      <div style={{ marginTop: "1rem" }}>
+        <p>Don't have an account?</p>
+        <button type="button" onClick={() => navigate("/signup")}>
+          Sign Up
+        </button>
+      </div>
     </div>
   );
 }
