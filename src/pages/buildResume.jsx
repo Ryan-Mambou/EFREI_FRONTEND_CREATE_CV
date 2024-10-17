@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import httpService from "../services/httpService";
 import Nav from "../components/nav";
+import { toast } from "react-toastify";
 
 function BuildResume() {
   const formik = useFormik({
@@ -32,7 +33,7 @@ function BuildResume() {
       startDate: Yup.date().required("Required"),
       endDate: Yup.date(),
     }),
-    onSubmit: (values) => {
+    onSubmit: (values, { resetForm }) => {
       const data = {
         firstname: values.firstName,
         lastname: values.lastName,
@@ -55,11 +56,11 @@ function BuildResume() {
         ],
       };
 
-      console.log(data);
-
       httpService
         .post("/cv", data) // Ensure you post to the correct endpoint for creating CVs
         .then((response) => {
+          toast.success("CV created successfully!");
+          resetForm();
           console.log("response: ", response.data);
         })
         .catch((err) => console.log("error", err.response.data));
