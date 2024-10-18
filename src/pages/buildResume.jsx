@@ -72,7 +72,7 @@ function BuildResume() {
       };
 
       httpService
-        .post("/cv", data) // Ensure you post to the correct endpoint for creating CVs
+        .post("/cv", data)
         .then((response) => {
           toast.success("CV created successfully!");
           resetForm();

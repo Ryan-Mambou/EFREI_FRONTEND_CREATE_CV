@@ -8,6 +8,7 @@ import CVPdf from "./pages/cvPDF";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "react-tippy/dist/tippy.css";
 import "./App.css";
 
 function App() {

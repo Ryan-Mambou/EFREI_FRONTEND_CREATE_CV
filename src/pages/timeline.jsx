@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Nav from "../components/nav";
 import httpService from "../services/httpService";
 import CVComponent from "../components/cvComponent";
+import ModifyModal from "../components/modifyModal";
 import { IoMapSharp } from "react-icons/io5";
 import { FaSearch } from "react-icons/fa";
 
@@ -9,6 +10,8 @@ function Timeline() {
   const [cvs, setCvs] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredCvs, setFilteredCvs] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [activeCvId, setActiveCvId] = useState(null);
 
   const headingStyle = {
     display: "flex",
@@ -35,6 +38,11 @@ function Timeline() {
 
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
+  };
+
+  const toggleShowModal = (id) => {
+    setShowModal(!showModal);
+    setActiveCvId(id);
   };
 
   useEffect(() => {
@@ -80,9 +88,19 @@ function Timeline() {
               lastname={cv.lastname}
               firstname={cv.firstname}
               description={cv.description}
+              role={cv?.experience[0]?.role}
+              institution={cv?.education[0]?.institution}
+              company={cv?.experience[0]?.company}
+              visible={cv.visible}
+              graduationYear={cv?.education[0]?.year}
+              degree={cv?.education[0]?.degree}
+              startDate={cv?.experience[0]?.startDate}
+              endDate={cv?.experience[0]?.endDate}
               id={cv._id}
               key={cv._id}
               userId={cv.userId._id}
+              isOpen={activeCvId === cv._id}
+              toggleShowModal={toggleShowModal}
             />
           ))}
         </div>

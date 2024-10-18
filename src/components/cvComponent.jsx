@@ -1,19 +1,36 @@
 import { useState } from "react";
 import Recommendation from "./recommendation";
+import ModifyModal from "./modifyModal";
 import httpService from "../services/httpService";
 import { FaRegPenToSquare } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
+import { Tooltip } from "react-tippy";
 
-function CVComponent({ firstname, lastname, description, id, userId }) {
-  const [recommendations, setRecommendations] = useState([]); // Stocker les recommandations
+function CVComponent({
+  firstname,
+  lastname,
+  description,
+  company,
+  institution,
+  startDate,
+  endDate,
+  visible,
+  role,
+  degree,
+  graduationYear,
+  id,
+  userId,
+  toggleShowModal,
+  isOpen,
+}) {
   const [recommendation, setRecommendation] = useState("");
-  const [showRecommendations, setShowRecommendations] = useState(false); // Pour gérer l'affichage des recommandations
+  const [recommendations, setRecommendations] = useState([]);
+  const [showRecommendations, setShowRecommendations] = useState(false);
 
-  // Fonction pour récupérer les recommandations depuis l'API
   const fetchRecommendations = () => {
     httpService
-      .get(`/recommendation/${id}`) // Appel à l'API pour récupérer les recommandations du CV
+      .get(`/recommendation/${id}`)
       .then((response) => {
         setRecommendations(response.data);
         toggleSetRecommendations();
@@ -54,17 +71,18 @@ function CVComponent({ firstname, lastname, description, id, userId }) {
   const decodedToken = jwtDecode(token);
   const { id: decodedUserId } = decodedToken;
 
-  console.log(decodedUserId, userId);
-
   return (
     <>
       <div className="cv-item">
         <div style={topStyle}>
           <h2 style={{ textAlign: "center" }}>{`${firstname} ${lastname}`}</h2>
           {decodedUserId === userId && (
-            <FaRegPenToSquare
-              style={{ fontSize: "1.2rem", cursor: "pointer" }}
-            />
+            <Tooltip title="Modify cv">
+              <FaRegPenToSquare
+                style={{ fontSize: "1.2rem", cursor: "pointer" }}
+                onClick={() => toggleShowModal(id)}
+              />
+            </Tooltip>
           )}
         </div>
         <p>{description}</p>
@@ -118,6 +136,22 @@ function CVComponent({ firstname, lastname, description, id, userId }) {
           <p>Aucune recommandation trouvée pour ce CV.</p>
         )}
       </div>
+      <ModifyModal
+        isOpen={isOpen}
+        firstname={firstname}
+        lastname={lastname}
+        description={description}
+        degree={degree}
+        graduationYear={graduationYear}
+        company={company}
+        institution={institution}
+        startDate={startDate}
+        endDate={endDate}
+        role={role}
+        visible={visible}
+        closeModal={toggleShowModal}
+        cvId={id}
+      />
     </>
   );
 }
