@@ -1,9 +1,11 @@
 import { useState } from "react";
 import Recommendation from "./recommendation";
 import httpService from "../services/httpService";
+import { FaRegPenToSquare } from "react-icons/fa6";
 import { toast } from "react-toastify";
+import { jwtDecode } from "jwt-decode";
 
-function CVComponent({ firstname, lastname, description, id }) {
+function CVComponent({ firstname, lastname, description, id, userId }) {
   const [recommendations, setRecommendations] = useState([]); // Stocker les recommandations
   const [recommendation, setRecommendation] = useState("");
   const [showRecommendations, setShowRecommendations] = useState(false); // Pour gérer l'affichage des recommandations
@@ -44,10 +46,27 @@ function CVComponent({ firstname, lastname, description, id }) {
     }
   };
 
+  const topStyle = {
+    textAlign: "center",
+  };
+
+  const token = localStorage.getItem("token");
+  const decodedToken = jwtDecode(token);
+  const { id: decodedUserId } = decodedToken;
+
+  console.log(decodedUserId, userId);
+
   return (
     <>
       <div className="cv-item">
-        <h2>{`${firstname} ${lastname}`}</h2>
+        <div style={topStyle}>
+          <h2 style={{ textAlign: "center" }}>{`${firstname} ${lastname}`}</h2>
+          {decodedUserId === userId && (
+            <FaRegPenToSquare
+              style={{ fontSize: "1.2rem", cursor: "pointer" }}
+            />
+          )}
+        </div>
         <p>{description}</p>
         <a href={`/resume/${id}`} target="_blank" rel="noopener noreferrer">
           View details in PDF

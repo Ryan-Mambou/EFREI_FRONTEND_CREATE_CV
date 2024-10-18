@@ -82,6 +82,7 @@ function Timeline() {
               description={cv.description}
               id={cv._id}
               key={cv._id}
+              userId={cv.userId._id}
             />
           ))}
         </div>
