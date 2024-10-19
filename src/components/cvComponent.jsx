@@ -23,6 +23,7 @@ function CVComponent({
   userId,
   toggleShowModal,
   isOpen,
+  updateCV,
 }) {
   const [recommendation, setRecommendation] = useState("");
   const [recommendations, setRecommendations] = useState([]);
@@ -151,6 +152,7 @@ function CVComponent({
         visible={visible}
         closeModal={toggleShowModal}
         cvId={id}
+        onSave={updateCV}
       />
     </>
   );

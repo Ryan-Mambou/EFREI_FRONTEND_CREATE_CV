@@ -36,6 +36,15 @@ function Timeline() {
       });
   }, []);
 
+  const updateCV = (updatedCV) => {
+    setCvs((prevCvs) =>
+      prevCvs.map((cv) => (cv._id === updatedCV._id ? updatedCV : cv))
+    );
+    setFilteredCvs((prevFilteredCvs) =>
+      prevFilteredCvs.map((cv) => (cv._id === updatedCV._id ? updatedCV : cv))
+    );
+  };
+
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
   };
@@ -100,6 +109,7 @@ function Timeline() {
               key={cv._id}
               userId={cv.userId._id}
               isOpen={activeCvId === cv._id}
+              updateCV={updateCV}
               toggleShowModal={toggleShowModal}
             />
           ))}

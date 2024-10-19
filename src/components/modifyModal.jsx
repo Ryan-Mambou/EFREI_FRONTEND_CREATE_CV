@@ -22,6 +22,7 @@ function ModifyModal({
   role,
   degree,
   graduationYear,
+  onSave,
 }) {
   const radioStyle = {
     display: "flex",
@@ -93,7 +94,8 @@ function ModifyModal({
         .then((response) => {
           toast.success("CV modified successfully!");
           closeModal();
-          getCvs();
+          console.log("update", response.data);
+          onSave(response.data);
         })
         .catch((err) => console.log("error", err.response.data));
     },
