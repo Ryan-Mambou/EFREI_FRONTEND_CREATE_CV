@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/login";
 import SignUp from "./pages/signup";
 import Timeline from "./pages/timeline";
-import Error from "./pages/Error";
+import Error from "./pages/error";
 import BuildResume from "./pages/buildResume";
 import CVPdf from "./pages/cvPDF";
 import ProtectedRoute from "./components/ProtectedRoute";
