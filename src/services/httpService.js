@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3002/api/",
+  // baseURL: "http://localhost:3002/api/",
+  baseURL: "https://api-create-cv.onrender.com/api/",
 });
 
 axiosInstance.interceptors.request.use(
